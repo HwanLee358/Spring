@@ -16,5 +16,5 @@
 <!-- 		<beans:property name="chef" ref="cf" /> -->
 	</beans:bean>
 	<!-- DI : annotation -->
-	<context:component-scan base-package="com.yedam.spring" />
+	<context:component-scan base-package="com.yedam.spring.annotation" />
 </beans>
