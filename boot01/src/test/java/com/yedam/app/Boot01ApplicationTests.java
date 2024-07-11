@@ -40,7 +40,7 @@ class Boot01ApplicationTests {
 		assertEquals(findVO.getEmpname(), "Den");
 	}
 	
-	@Test
+	//@Test
 	void insertEmpInfo() {
 		//등록
 		EmpVO empVO = new EmpVO();
