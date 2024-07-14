@@ -1,5 +1,6 @@
 package com.yedam.app.departments.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -35,14 +36,29 @@ public class DepartmentsServiceImpl implements DepartmentsService{
 
 	@Override
 	public Map<String, Object> departmentsUpdate(DepartmentsVO departmentsVO) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Object> map = new HashMap<>();
+		boolean isSuccessed = false;
+		
+		int result = departmentsMapper.updateDepartmentsInfo(departmentsVO.getDepartmentId(), departmentsVO);
+		if(result == 1) {
+			isSuccessed = true;
+		}
+		
+		map.put("result", isSuccessed);
+		map.put("target", departmentsVO);
+		return map;
 	}
 
 	@Override
 	public Map<String, Object> departmentsdelate(DepartmentsVO departmentsVO) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<String, Object> map = new HashMap<>();
+		
+		int result = departmentsMapper.deleteDepartmentsInfo(departmentsVO.getDepartmentId());
+		if(result == 1) {
+			map.put("departmentId", departmentsVO.getDepartmentId());
+		}
+		
+		return map;
 	}
 
 }
