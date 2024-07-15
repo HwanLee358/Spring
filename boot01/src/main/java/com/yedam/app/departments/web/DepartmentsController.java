@@ -1,4 +1,4 @@
-package com.yedam.app.deparments.web;
+package com.yedam.app.departments.web;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class DepartmentsController {
 	public String departmentsList(Model model) {
 		List<DepartmentsVO> list = departmentsService.departmentsList();
 		model.addAttribute(list);
-		return "deparments/list";
+		return "departments/list";
 	}
 	
 	// 단건조회
@@ -35,8 +35,14 @@ public class DepartmentsController {
 	}
 	
 	// 등록
+	@GetMapping("departmentsInsert")
+	public String departmentsInsertForm() {
+		return "departments/insert";
+	}
+	
+	// 등록 - 처리
 	@PostMapping("departmentsInsert")
-	public String departmentsInsert(DepartmentsVO departmentsVO) {
+	public String departmentsInsertProcess(DepartmentsVO departmentsVO) {
 		int did = departmentsService.departmentsInsert(departmentsVO);
 		String url = null;
 		if(did > -1) {

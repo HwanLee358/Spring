@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 
 public class DepartmentsVO {
-	private Integer departmentId;
-	private String departmentName;
-	private int managerId;
-	private int locationId;
+	private Integer departmentid;
+	private String departmentname;
+	private int managerid;
+	private int locationid;
 }
