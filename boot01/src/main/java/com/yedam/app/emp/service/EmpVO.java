@@ -1,6 +1,7 @@
 package com.yedam.app.emp.service;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -12,7 +13,7 @@ public class EmpVO {
 	private String empname;
 	private int mgr;
 	private double sal;
-	private int deptid;
-//	@DateTimeFormat(pattern = "yyyy-MM-dd") // 파라미터 자동변환
+	private Integer deptid;
+	@DateTimeFormat(pattern = "yyyy-MM-dd") // 파라미터 자동변환
 	private Date hiredate; 
 }
