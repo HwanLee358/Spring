@@ -2,8 +2,40 @@
 <html xmlns:th="https://www.thymeleaf.org/">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>게시판 조회</title>
 </head>
 <body>
+	<h3>게시판 조회</h3>
+	<div>
+		<div>
+			<label>제목</label>
+			<input type="text" th:value="${boardInfo.boardTitle}" readonly />
+		</div>
+		<div>
+			<label>작성자</label>
+			<input type="text" th:value="${boardInfo.boardWriter}" readonly />
+		</div>
+		<div>
+			<label>작성일</label>
+			<input type="date" th:value="${#dates.format(boardInfo.regdate, 'yyyy-MM-dd')}"/>
+		</div>
+		<div>
+			<label>수정일</label>
+			<input type="date" th:value="${#dates.format(boardInfo.updatedate, 'yyyy-MM-dd')}" />
+		</div>
+		<div>
+			<label>내용</label>
+			<textarea rows="" cols="">[[${boardInfo.boardContent}]]</textarea>
+		</div>
+		<div>
+			<label>이미지</label>
+			<img th:src="@{'/images/'+${boardInfo.image}}" />
+		</div>
+		<div>
+			<button type="button" th:onclick="|location.href='@{/boardUpdate(boardNo=${boardInfo.boardNo})}'|">수정</button>
+			<button type="button" th:onclick="|location.href='@{/boardList}'|">목록</button>
+			<button type="button" th:onclick="|location.href='@{/boardDelete(boardNo=${boardInfo.boardNo})}'|">삭제</button>
+		</div>
+	</div>
 </body>
 </html>
