@@ -59,7 +59,6 @@
 			,board_content = #{boardContent}
 			,board_writer = #{boardWriter}
 			,updatedate = sysdate
-			,image = #{image}
 		</set>
 		WHERE board_no = #{boardNo}
 	</update>

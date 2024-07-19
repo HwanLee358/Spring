@@ -1,40 +1,54 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org/">
+<html xmlns:th="https://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layouts/default_layout}"
+      layout:fragment="content">
 <head>
 <meta charset="UTF-8">
 <title>게시판 조회</title>
 </head>
 <body>
-	<h3>게시판 조회</h3>
-	<div>
-		<div>
-			<label>제목</label>
-			<input type="text" th:value="${boardInfo.boardTitle}" readonly />
-		</div>
-		<div>
-			<label>작성자</label>
-			<input type="text" th:value="${boardInfo.boardWriter}" readonly />
-		</div>
-		<div>
-			<label>작성일</label>
-			<input type="date" th:value="${#dates.format(boardInfo.regdate, 'yyyy-MM-dd')}"/>
-		</div>
-		<div>
-			<label>수정일</label>
-			<input type="date" th:value="${#dates.format(boardInfo.updatedate, 'yyyy-MM-dd')}" />
-		</div>
-		<div>
-			<label>내용</label>
-			<textarea rows="" cols="">[[${boardInfo.boardContent}]]</textarea>
-		</div>
-		<div>
-			<label>이미지</label>
-			<img th:src="@{'/images/'+${boardInfo.image}}" />
-		</div>
-		<div>
-			<button type="button" th:onclick="|location.href='@{/boardUpdate(boardNo=${boardInfo.boardNo})}'|">수정</button>
-			<button type="button" th:onclick="|location.href='@{/boardList}'|">목록</button>
-			<button type="button" th:onclick="|location.href='@{/boardDelete(boardNo=${boardInfo.boardNo})}'|">삭제</button>
+	<div class="card mb-4">
+		<div class="card-body shadow">
+			<h3>게시판 조회</h3>
+			<table class="table">
+				<tr>
+					<th>번호</th>
+					<td>[[${boardInfo.boardNo}]]</td>
+				</tr>
+				<tr>
+					<th>제목</th>
+					<td>[[${boardInfo.boardTitle}]]</td>
+				</tr>
+				<tr>
+					<th>작성자</th>
+					<td>[[${boardInfo.boardWriter}]]</td>
+				</tr>
+				<tr>
+					<th>내용</th>
+					<td style="height: 100px;">[[${boardInfo.boardContent}]]</td>
+				</tr>
+				<tr>
+					<th>첨부이미지</th>
+					<!-- /images/cat.jpg -->	
+					<td>
+						<img th:src="@{|/images/${boardInfo.image}|}" />
+						<!--  -->
+						<img th:src="|${#httpServletRequest.getContextPath()}/images/${boardInfo.image}|" />
+						<!-- 링크표현식 : Path variable로 연결하는 방식 -->
+						<img th:src="@{/images/{fileName}(fileName=${boardInfo.image})}" />
+					</td>
+				</tr>
+				<tr>
+					<th>작성일자</th><!-- 'yyyy/MM/dd' -->
+					<td>[[${#dates.format(boardInfo.regdate, 'yyyy/MM/dd')}]]</td>
+				</tr>
+			</table>
+			<div>
+				<button class="btn btn-primary" type="button" th:onclick="|location.href='@{/boardUpdate(boardNo=${boardInfo.boardNo})}'|">수정</button>
+				<button class="btn btn-secondary" type="button" th:onclick="|location.href='@{/boardList}'|">목록</button>
+				<button  class="btn btn-danger" type="button" th:onclick="|location.href='@{/boardDelete(boardNo=${boardInfo.boardNo})}'|">삭제</button>
+			</div>
 		</div>
 	</div>
 </body>

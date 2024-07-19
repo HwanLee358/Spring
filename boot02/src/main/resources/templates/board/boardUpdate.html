@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layouts/default_layout}"
+      layout:fragment="content">
+<head>
+<meta charset="UTF-8">
+<title>게시판 수정</title>
+</head>
+<body>
+	<div class="card mb-4">
+		<div class="card-body shadow">
+			<h3>게시판 수정</h3>
+			<form name="updateForm" th:object="${boardInfo}">
+				<table class="table">
+					<tr>
+						<th>번호</th>
+						<td><input type="text" th:field="*{boardNo}" readonly/></td>
+					</tr>
+					<tr>
+						<th>제목</th>
+						<td><input type="text" th:field="*{boardTitle}" /></td>
+					</tr>
+					<tr>
+						<th>작성자</th>
+						<td><input type="text" th:field="*{boardWriter}" /></td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td style="height: 100px;">
+							<textarea rows="" cols="" th:field="*{boardContent}"></textarea>
+						</td>
+					</tr>
+					<tr>
+						<th>첨부이미지</th>
+						<!-- /images/cat.jpg -->	
+						<td>
+							<img th:src="@{|/images/${boardInfo.image}|}" />
+						</td>
+					</tr>
+					<tr>
+						<th>작성일자</th><!-- 'yyyy/MM/dd' -->
+						<td><input type="date" th:field="*{regdate}" readonly></td>
+					</tr>
+				</table>
+			</form>
+			<div>
+				<button class="btn btn-primary" type="button" id="updateBtn">수정</button>
+				<button class="btn btn-secondary" type="button" th:onclick="|location.href='@{/boardList}'|">목록</button>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$('#updateBtn').on('click', updateAjax);
+		
+		function updateAjax(){
+			//1) 유효성 체크
+
+			
+			//2) 서버에 보낼 데이터 정리
+			let dataObj = getEmpObj();
+			console.log(dataObj);
+			
+			//3) AJAX
+			$.ajax('boardUpdate', {
+				type : 'post',
+				contentType : 'application/json',
+				data : JSON.stringify(dataObj),
+			})
+			.done(result => {
+				console.log(result);
+			})
+			.fail(err => console.log(err));
+		}
+		
+		function getEmpObj(){
+			let formAry = $('form[name="updateForm"]').serializeArray();
+			
+			let formObj = {};
+			$.each(formAry, function(idx, input){
+				formObj[input.name] = input.value;
+			});
+			return formObj;
+		}
+	</script>
+</body>
+</html>

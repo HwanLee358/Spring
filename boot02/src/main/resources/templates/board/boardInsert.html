@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org/">
+<html xmlns:th="https://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layouts/default_layout}"
+      layout:fragment="content">
 <head>
 <meta charset="UTF-8">
 <title>게시판 등록</title>
@@ -7,29 +10,53 @@
 <body>
 	<h3>게시판 등록</h3>
 	<form name="insertForm" th:action="@{/boardInsert}" method="post" enctype="multipart/form-data">
-		<div>
-			<label>제목</label>
-			<input type="text" name="boardTitle"/>
-		</div>
-		<div>
-			<label>작성자</label>
-			<input type="text" name="boardWriter"/>
-		</div>
-		<div>
-			<label>작성일</label>
-			<input type="date" name="regdate"/>
-		</div>
-		<div>
-			<label>내용</label>
-			<textarea rows="" cols="" name="boardContent"></textarea>
-		</div>
-		<div>
-			<label>첨부파일</label>
-			<input type="file" name="images"/>
-		</div>
+		<table class="table">
+			<tr>
+				<th>제목</th>
+				<td><input type="text" name="boardTitle"/></td>
+			</tr>
+			<tr>
+				<th>작성자</th>
+				<td><input type="text" name="boardWriter"/></td>
+			</tr>
+			<tr>
+				<th>작성일</th>
+				<td><input type="date" name="regdate"/></td>
+			</tr>
+			<tr>
+				<th>내용</th>
+				<td><textarea rows="" cols="" name="boardContent"></textarea></td>
+			</tr>
+			<tr>
+				<th>첨부파일</th><!-- cat.jpg -->
+				<td><input type="file" name="images"/></td>
+			</tr>
+		</table>
 		<div>
 			<button type="submit">등록</button>
 		</div>
 	</form>
+	<script type="text/javascript">
+		$(insertForm).on('submit', function(event){
+			event.preventDefault();
+			
+			let title = $('input[name="boardTitle"]');
+			let writer = $('input[name="boardWriter"]');
+			
+			if(title.val() == ''){
+				alert('제목이 입력되지 않았습니다');
+				title.focus();
+				return;
+			}
+			if(writer.val() == ''){
+				alert('내용이 입력되지 않았습니다');
+				writer.focus();
+				return;
+			}
+			alert('게시글이 등록되었습니다')
+			
+			insertForm.submit();
+		})
+	</script>
 </body>
 </html>

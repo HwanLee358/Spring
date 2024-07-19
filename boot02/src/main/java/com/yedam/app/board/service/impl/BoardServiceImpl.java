@@ -19,27 +19,28 @@ public class BoardServiceImpl implements BoardService{
 	BoardServiceImpl(BoardMapper boardMapper){
 		this.boardMapper = boardMapper;
 	}
-	
+	//전체조회
 	@Override
 	public List<BoardVO> boardList() {	
 		return boardMapper.selectBoardAll();
 	}
-
+	//단건조회
 	@Override
 	public BoardVO boardInfo(BoardVO boardVO) {
 		return boardMapper.selectBoardInfo(boardVO);
 	}
-
+	//등록
 	@Override
 	public int insertBoard(BoardVO boardVO) {
-		return boardMapper.insertBoardInfo(boardVO);
+		int result = boardMapper.insertBoardInfo(boardVO);
+		return result == 1 ? boardVO.getBoardNo() : -1;
 	}
-
+	//수정
 	@Override
 	public Map<String, Object> updateBoard(BoardVO boardVO) {
 		Map<String, Object> map = new HashMap<>();
 		boolean isSuccessed = false;
-		int result = boardMapper.insertBoardInfo(boardVO);
+		int result = boardMapper.updateBoardInfo(boardVO);
 		if(result == 1) {
 			isSuccessed = true;
 		}
@@ -47,7 +48,7 @@ public class BoardServiceImpl implements BoardService{
 		map.put("target", boardVO);
 		return map;
 	}
-
+	//삭제
 	@Override
 	public int deleteBoard(int boardNO) {
 		return boardMapper.deleteBoardInfo(boardNO);

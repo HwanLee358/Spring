@@ -92,7 +92,7 @@ public class BoardController {
 	@GetMapping("boardUpdate")
 	public String boardUpdateForm(BoardVO boardVO, Model model) {
 		BoardVO findVO = boardService.boardInfo(boardVO);
-		model.addAttribute(findVO);
+		model.addAttribute("boardInfo", findVO);
 		return "board/boardUpdate";
 	}
 	// 수정 - 처리 : URI - boardUpdate / PARAMETER - BoardVO(JSON)
@@ -105,8 +105,8 @@ public class BoardController {
 	// 삭제 - 처리 : URI - boardDelete / PARAMETER - Integer
 	//             RETURN - 전체조회 다시 호출
 	@GetMapping("boardDelete")
-	public String boardDelete(@RequestParam Integer boardNO) {
-		boardService.deleteBoard(boardNO);
+	public String boardDelete(@RequestParam Integer boardNo) {
+		boardService.deleteBoard(boardNo);
 		return "redirect:boardList";
 	}
 
