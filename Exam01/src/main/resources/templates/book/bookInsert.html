@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layouts/default_layout}"
+      layout:fragment="Content">      
+	<h3 style="text-align: center;">도서 등록</h3>
+	<form name="insertForm" th:action="@{/bookInsert}" method="post" th:object="${bookForm}">
+		<table class="table">
+			<tr>
+				<th>도서번호</th>
+				<td><input type="text" name="bookNo" th:field="*{bookNo}"/></td>
+			</tr>
+			<tr>
+				<th>도서명</th>
+				<td><input type="text" name="bookName" /></td>
+			</tr>
+			<tr>
+				<th>도서표지</th>
+				<td><input type="text" name="bookCoverimg"/></td>
+			</tr>
+			<tr>
+				<th>출판일자</th>
+				<td><input type="text" name="bookDate" placeholder="yyyy-MM-dd"/></td>
+			</tr>
+			<tr>
+				<th>금액</th>
+				<td><input type="text" name="bookPrice"/></td>
+			</tr>
+			<tr>
+				<th>출판사</th>
+				<td><input type="text" name="bookPublisher"/></td>
+			</tr>
+			<tr>
+				<th>도서소개</th>
+				<td><textarea rows="" cols="" name="bookInfo"></textarea></td>
+			</tr>
+		</table>
+		<button type="submit">등록</button>
+		<button type="button" th:onclick="|location.href='@{/bookList}'|">조회</button>
+	</form>
+	<script type="text/javascript">
+		$(insertForm).on('submit', function(event){
+			event.preventDefault();
+			let bookName = $('input[name="bookName"]');
+			if(bookName.val() == ''){
+				alert('도서명이 입력되지 않았습니다');
+				bookName.focus();
+				return;
+			}
+			alert("도서등록이 완료 되었습니다");
+			insertForm.submit();
+		})
+	</script>
+</html>

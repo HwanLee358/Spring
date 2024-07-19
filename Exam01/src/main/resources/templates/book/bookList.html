@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{common/layouts/default_layout}"
+      layout:fragment="Content">
+<style>
+table, th, td {
+  border: 1px solid black;
+}
+
+</style>
+<div class="container">
+<h3 style="text-align: center;">도서 조회/수정</h3>
+<table class="table">
+	<thead>
+		<tr>
+			<th>도서번호</th>
+			<th>도서명</th>
+			<th>표지</th>
+			<th>출판일자</th>
+			<th>금액</th>
+			<th>출판사</th>
+			<th>도서소개</th>
+		</tr>
+	</thead>
+	<tbody>
+		<th:block th:each="book : ${bookList}">
+			<tr>
+				<td th:text=${book.bookNo}></td>
+				<td th:text=${book.bookName}></td>
+				<td>
+					<img th:src="@{/images/{fileName}(fileName=${book.bookCoverimg})}" style="width: 50px;"/>
+				</td>
+				<td>[[${#dates.format(book.bookDate, 'yyyy/MM/dd')}]]</td>
+				<td th:text="${#numbers.formatInteger(book.bookPrice, 3, 'COMMA')}"></td>
+				<td th:text="${book.bookPublisher}"></td>
+				<td th:text="${book.bookInfo}"></td>
+			</tr>
+		</th:block>
+	</tbody>
+</table>
+</div>
+
+</html>
