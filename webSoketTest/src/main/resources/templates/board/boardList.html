@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Boot WebSocket Chat</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs"></script>
+    <script>
+        let stompClient = null;
+
+        function connect() {
+            const socket = new SockJS('/chat');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({}, function(frame) {
+                console.log('Connected: ' + frame);
+                stompClient.subscribe('/topic/public', function(message) {
+                    showMessage(JSON.parse(message.body));
+                });
+            });
+        }
+
+        function disconnect() {
+            if (stompClient !== null) {
+                stompClient.disconnect();
+            }
+            console.log("Disconnected");
+        }
+
+        function sendMessage() {
+            const message = $('#message').val();
+            const sender = $('#sender').val();
+            stompClient.send("/app/chat.sendMessage", {}, JSON.stringify({ sender: sender, content: message, type: 'CHAT' }));
+        }
+
+        function showMessage(message) {
+            $('#chatMessages').append("<tr><td>" + message.sender + ": " + message.content + "</td></tr>");
+        }
+
+        $(function () {
+            connect();
+            $('#sendBtn').click(function() {
+                sendMessage();
+            });
+        });
+    </script>
+</head>
+<body>
+    <div>
+        <label for="sender">Name:</label><input type="text" id="sender" />
+        <br/>
+        <label for="message">Message:</label><input type="text" id="message" />
+        <button id="sendBtn">Send</button>
+        <br/>
+        <table id="chatMessages"></table>
+    </div>
+</body>
+</html>
